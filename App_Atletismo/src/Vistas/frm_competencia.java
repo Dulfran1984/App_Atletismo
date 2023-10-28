@@ -1,18 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Vistas;
 
-/**
- *
- * @author POLI
- */
-public class frm_competencia extends javax.swing.JFrame {
+import Modelo.cls_competencia;
+import Modelo.cls_participantes;
+import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
-    /**
-     * Creates new form frm_competencia
-     */
+public class frm_competencia extends javax.swing.JFrame {
+    LinkedList<cls_competencia> objCompentencia = new LinkedList<>();
+    LinkedList<cls_participantes> objParticipantes = new LinkedList<>();
+    boolean bln_sw_participantes;
+    int int_posicion_participantes;
     public frm_competencia() {
         initComponents();
     }
@@ -45,6 +42,8 @@ public class frm_competencia extends javax.swing.JFrame {
         btn_guardar = new javax.swing.JButton();
         btn_consultar = new javax.swing.JButton();
         btn_actualizar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        lbl_estado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,15 +125,34 @@ public class frm_competencia extends javax.swing.JFrame {
 
         btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/file.png"))); // NOI18N
         btn_nuevo.setText("Nuevo");
+        btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nuevoActionPerformed(evt);
+            }
+        });
 
         btn_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/diskette.png"))); // NOI18N
         btn_guardar.setText("Guardar");
+        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardarActionPerformed(evt);
+            }
+        });
 
         btn_consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/search.png"))); // NOI18N
         btn_consultar.setText("Consultar");
+        btn_consultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_consultarActionPerformed(evt);
+            }
+        });
 
         btn_actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/updated.png"))); // NOI18N
         btn_actualizar.setText("Actualizar");
+
+        jLabel8.setText("Estado:");
+
+        lbl_estado.setText("--");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,10 +162,6 @@ public class frm_competencia extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_contacto, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -163,7 +177,16 @@ public class frm_competencia extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_contacto, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbl_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(15, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -206,7 +229,10 @@ public class frm_competencia extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txt_contacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(lbl_estado)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -224,11 +250,60 @@ public class frm_competencia extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addContainerGap(180, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
+        txt_contacto.setText("");
+        txt_edad.setText("");
+        txt_id.setText("");
+        txt_nombre.setText("");
+        cbx_nivel.setSelectedIndex(0);
+        txt_id.requestFocus();
+    }//GEN-LAST:event_btn_nuevoActionPerformed
+
+    private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
+        if(Integer.parseInt(txt_edad.getText()) >= 18){
+            int int_pos = objParticipantes.size();
+            objParticipantes.add(new cls_participantes(
+            txt_id.getText(),
+            txt_nombre.getText(),
+            Integer.parseInt(txt_edad.getText()), 
+            (String) cbx_nivel.getSelectedItem(),
+            txt_contacto.getText()));
+            JOptionPane.showMessageDialog(null, "Participante registrado " +
+                    "con éxito","Guardar",JOptionPane.INFORMATION_MESSAGE);
+            objParticipantes.get(int_pos).setInt_estado(1);
+        }else{
+          JOptionPane.showMessageDialog(null, "No cumples con la edad "+
+                  "requerida","Guardar",JOptionPane.ERROR_MESSAGE);
+        }  
+    }//GEN-LAST:event_btn_guardarActionPerformed
+
+    private void btn_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultarActionPerformed
+        int_posicion_participantes = 0;
+        bln_sw_participantes = false;
+        for(int i = 0; i < objParticipantes.size(); i++){
+            if(txt_id.getText().equals(objParticipantes.get(i).getStr_id())){
+                bln_sw_participantes = true;
+                int_posicion_participantes = i;
+                break;
+            }
+        }
+        if(bln_sw_participantes == false){
+            JOptionPane.showMessageDialog(null, "No se encontraron "+
+                    "registros","Consultar",JOptionPane.ERROR_MESSAGE);
+        }else{
+            txt_contacto.setText(objParticipantes.get(int_posicion_participantes).getStr_contacto());
+            txt_edad.setText(""+objParticipantes.get(int_posicion_participantes).getInt_edad());
+            txt_nombre.setText(objParticipantes.get(int_posicion_participantes).getStr_nombre());
+            cbx_nivel.setSelectedItem(""+objParticipantes.get(int_posicion_participantes).getStr_nivel());
+            lbl_estado.setText(""+ objParticipantes.get(int_posicion_participantes).getInt_estado());
+        }
+    }//GEN-LAST:event_btn_consultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,9 +353,11 @@ public class frm_competencia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lbl_estado;
     private javax.swing.JTextField txt_contacto;
     private javax.swing.JTextField txt_edad;
     private javax.swing.JTextField txt_id;
